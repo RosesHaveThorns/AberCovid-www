@@ -1,0 +1,147 @@
+/* DEFAULT */
+h2 {
+    color: #5f616a;
+    padding-left: 10px;
+    font-family: 'Didot';
+    font-size: xx-large;
+}
+
+html, body {
+    height: 100%;
+    margin: 0px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+  flex: 1 0 auto;
+}
+
+/* HEADER  */
+.page-header {
+    background-color: #c4bcd2;
+    box-shadow: 0 0px 10px rgba(0,0,0,.2);
+    text-decoration: none;
+}
+
+.container {
+    width: 960px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.page-header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.header-left h1 {
+    color: #44475c;
+    font-family: 'Didot';
+    font-weight: 900;
+    font-size: 45px;
+    text-decoration: none;
+}
+
+.header-left {
+    background-color: #c4bcd2;
+}
+
+.header-right {
+    background-color: #c4bcd2;
+}
+
+.header-right ul {
+    margin: 1em 0 .5em;
+    padding: 0;
+    text-align: center;
+}
+
+.header-right li {
+    display: inline;
+}
+
+.header-right a {
+    color: #323442;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+
+    display: inline-block;
+    padding: 5px 20px;
+}
+
+@media (min-width:960px) {
+    .main-header .container {
+        justify-content: space-between;
+    }
+}
+
+/* FOOTER  */
+.page-footer {
+    box-shadow: 0 0px 10px rgba(0,0,0,.2);
+    background-color: #c4bcd2;
+    margin-top: 0px;
+    flex-shrink: 0;
+    padding: 5px 40px 5px 40px;
+    text-decoration: none;
+}
+
+.footer-left h1 a, .footer-left h1 a:visited, .footer-left h1 a:hover {
+    color: #44475c;
+    font-family: 'Didot';
+    font-weight: 900;
+    text-decoration: none;
+}
+
+.footer-left {
+    background-color: #c4bcd2;
+    display: inline-block;
+    padding-bottom: 0px;
+}
+
+.footer-left p {
+    font-size: 12px;
+    color: #000000;
+    max-width: 20vw;
+}
+
+.footer-right {
+    background-color: #c4bcd2;
+    float: right;
+    text-align: right;
+}
+
+.footer-right p {
+    font-size: 12px;
+    color: #000000;
+    padding-bottom: 0px;
+    max-width: 60vw;
+}
+
+@media (max-width:800px) {
+    .footer-right p {
+        text-align: center;
+        max-width: 100vw;
+    }
+
+    .footer-left {
+        display: block;
+    }
+
+    .footer-left p {
+        text-align: center;
+        max-width: 100vw;
+    }
+
+    .page-footer {
+      padding: 5px 10px 5px 10px;
+    }
+}
