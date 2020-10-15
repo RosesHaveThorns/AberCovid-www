@@ -5,6 +5,10 @@
 
         <link rel="stylesheet" href="static/main.css">
 
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+
         <title>Matthew Brindle</title>
         <link rel="icon" type="image/png" href="ADD_IMG_ADDR"/>
     </head>
@@ -19,10 +23,10 @@
                 <nav class="header-right">
                   <ul class="nav-list">
                       <li>
-                          <a href="#">Home</a>
+                          <a href="index.html">Home</a>
                       </li>
                       <li>
-                          <a href="#">AberCovid</a>
+                          <a href="covid.html" id="current-link">AberCovid</a>
                       </li>
                     </ul>
                 </nav>
@@ -30,11 +34,109 @@
         </header>
 
         <div class="content">
+            <h2>Covid-19 Cases at the University of Aberystwyth</h2>
+            <p>The data illustrated below is collected from
+                <a href="https://www.aber.ac.uk/en/important-info/living-and-learning-in-aberystwyth-2020-21/covid-19-case-numbers/">aber.ac.uk</a>,
+                and stored in this
+                <a href="https://docs.google.com/spreadsheets/d/1TGQTfr3pT-cnr5Rr7iFQBtYUNXvLAADRQTc8lAbktLU/">Google Sheet</a>
+                daily. Occaisonally data may be presented in emails to students, and will also be included. This process will be automated soon.
+            </p>
+            <div class="chart-container">
+                <div class="chart">
+                    <canvas id="covidChart"></canvas>
+                    <script>
+                        function BuildChart(labels, vals1, chartTitle1, vals2, chartTitle2) {
+                            var ctx = document.getElementById('covidChart').getContext('2d');
+                            var chart = new Chart(ctx, {
+                                // The type of chart we want to create
+                                type: 'line',
+
+                                // The data for our dataset
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        label: chartTitle1,
+                                        backgroundColor: 'rgba(255, 255, 255, 0)',
+                                        borderColor: 'rgb(220, 0, 0)',
+                                        data: vals1
+                                    }, {
+                                      label: chartTitle2,
+                                      backgroundColor: 'rgba(255, 255, 255, 0)',
+                                      borderColor: 'rgb(220, 100, 0)',
+                                      data: vals2
+                                    }]
+                                },
+
+                                // Configuration options go here
+                                options: {
+                                    responsive: true,
+                                    mantainAspectRatio: true,
+                                    scales: {
+                                        xAxes: [{
+                                            type: "time",
+                                            time: {
+                                              parser: "YYYY-MM-DD",
+                                              tooltipFormat:'ll'
+                                            },
+                                            ticks: {source: 'data'},
+                                            scaleLabel:{
+                                                display: true,
+                                                labelString: 'Date',
+                                            }
+                                        }],
+                                        yAxes: [{
+                                            scaleLabel: {
+                                                display: true,
+                                                labelString: 'Cases'
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+
+                            return chart;
+                        }
+
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                                var json = JSON.parse(this.response);
+                                console.log(json);
+
+                                // Map JSON labels  back to values array
+                                var labels = json.feed.entry.map(function (e) {
+                                    return e.gsx$date.$t;
+                                });
+                                var dates = []
+                                for (var i = 0; i < labels.length; i++) {
+                                  dates.push(moment(labels[i]))
+                                }
+
+
+                                // Map JSON values back to values arrays
+                                var newcases_vals = json.feed.entry.map(function (e) {
+                                    return e.gsx$newcases.$t;
+                                });
+
+                                var totalcases_vals = json.feed.entry.map(function (e) {
+                                    return e.gsx$totalcases.$t;
+                                });
+
+                                BuildChart(dates, totalcases_vals, "Total Covid-19 Cases", newcases_vals, "New Covid-19 Cases per Day");
+                            }
+                        }
+
+                        xhttp.open("GET", "https://spreadsheets.google.com/feeds/list/1TGQTfr3pT-cnr5Rr7iFQBtYUNXvLAADRQTc8lAbktLU/od6/public/full?alt=json", false);
+                        xhttp.send();
+
+                    </script>
+                </div>
+          </div>
         </div>
 
         <footer class="page-footer">
             <div class="footer-left">
-                <p>© 2020 Matthew Brindle. All rights reserved.</p>
+                <p>&copy;2020 Matthew Brindle. All rights reserved.</p>
             </div>
 
             <div class="footer-right">
