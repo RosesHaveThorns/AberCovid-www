@@ -3,6 +3,8 @@ A webpage for displaying covid-19 cases and data for Aberystwyth University
 
 Currently viewable at ***users.aber.ac.uk/msb11***.
 
+**WEBPAGE DATA NO LONGER UPDATED, THE UNIVERSITY WEBPAGE NOW INCLUDES ITS OWN GRAPH**
+
 ## Template
 A webpage template including header and footer can be found in template.html.
 
